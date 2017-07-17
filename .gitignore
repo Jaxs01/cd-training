@@ -49,3 +49,7 @@ classes
 # .SVN files #
 #######################
 *.svn
+
+# IDEA #
+########
+.idea/
