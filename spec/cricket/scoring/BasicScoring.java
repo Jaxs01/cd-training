@@ -14,7 +14,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 @RunWith(ConcordionRunner.class)
-public class BasicScoring  {
+public class BasicScoring {
 	
     @Extension
     public ScreenshotExtension screenshotExtension = new ScreenshotExtension();
@@ -52,7 +52,7 @@ public class BasicScoring  {
     
     public Result enterScore(String entry) {
         Result score = null;
-        for (char c : entry.toCharArray()) {
+        for (char c : entry.trim().toCharArray()) {
             score = enterScore(c);
         }
         return score;
