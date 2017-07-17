@@ -1,0 +1,38 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'org.concordion:concordion-extensions:1.1.0',
+                'org.seleniumhq.selenium:selenium-java:2.+'
+}
+
+sourceSets {
+    test {
+        java {
+            srcDir 'spec'
+        }
+        resources {
+            srcDir 'spec'
+        }
+    }
+    main {
+        resources {
+            srcDir 'web'
+        }
+    }
+}
+
+test {
+    systemProperties['concordion.output.dir'] = "$reporting.baseDir/spec"
+    include 'CricketSpec.*'   
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.0'
+}
+
+test.dependsOn cleanTest
