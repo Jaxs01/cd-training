@@ -11,10 +11,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 @RunWith(ConcordionRunner.class)
-public class BasicScoring {
+public class BasicScoring  {
 	
     @Extension
     public ScreenshotExtension screenshotExtension = new ScreenshotExtension();
@@ -26,7 +26,7 @@ public class BasicScoring {
 
     @Before
     public void setup() throws IOException {
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         screenshotExtension.setScreenshotTaker(new SeleniumScreenshotTaker(driver));
         url = readURLFromSystemProperties();
         if (url == null) {
@@ -52,7 +52,7 @@ public class BasicScoring {
     
     public Result enterScore(String entry) {
         Result score = null;
-        for (char c : entry.trim().toCharArray()) {
+        for (char c : entry.toCharArray()) {
             score = enterScore(c);
         }
         return score;

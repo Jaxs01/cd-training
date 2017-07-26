@@ -1,22 +1,20 @@
 package org.concordion.ext.selenium;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Iterator;
+
+import javax.imageio.ImageIO;
 
 import org.concordion.ext.ScreenshotTaker;
 import org.concordion.ext.ScreenshotUnavailableException;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 
 public class SeleniumScreenshotTaker implements ScreenshotTaker {
 
@@ -33,31 +31,23 @@ public class SeleniumScreenshotTaker implements ScreenshotTaker {
     @Override
     public Dimension writeScreenshotTo(OutputStream outputStream) throws IOException {
         byte[] screenshot;
+
         try {
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+            screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         } catch (ClassCastException e) {
             throw new ScreenshotUnavailableException("driver does not implement TakesScreenshot");
         }
+
         outputStream.write(screenshot);
+
         return getImageDimension(screenshot);
     }
 
     private Dimension getImageDimension(byte[] screenshot) throws IOException {
-        try (ImageInputStream in = ImageIO.createImageInputStream(new ByteArrayInputStream(screenshot))) {
-            final Iterator<ImageReader> readers = ImageIO.getImageReaders(in);
-            if (readers.hasNext()) {
-                ImageReader reader = readers.next();
-                try {
-                    reader.setInput(in);
+        InputStream in = new ByteArrayInputStream(screenshot);
+        BufferedImage buf = ImageIO.read(in);
 
-                    return new Dimension(reader.getWidth(0), reader.getHeight(0));
-                } finally {
-                    reader.dispose();
-                }
-            }
-        }
-
-        throw new RuntimeException("Unable to read image dimensions");
+        return new Dimension(buf.getWidth(), buf.getHeight());
     }
 
     @Override
