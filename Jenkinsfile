@@ -57,8 +57,11 @@ pipeline {
         }
 
         stage('Acceptance Test') {
+            tools {
+                jdk "jdk8"
+            }
             steps {
-                withEnv(['PATH+CHROMEHOME=/usr/lib/chromium-browser/', "PATH+JAVA=${tool 'jdk8'}/bin"]) {
+                withEnv(['PATH+CHROMEHOME=/usr/lib/chromium-browser/']) {
                     wrap([$class: 'Xvfb']) {
                         sh './gradlew test -Dcricket.url=http://localhost:8081/calc.html'
                     }
