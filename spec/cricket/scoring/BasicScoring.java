@@ -52,7 +52,7 @@ public class BasicScoring  {
     
     public Result enterScore(String entry) {
         Result score = null;
-        for (char c : entry.toCharArray()) {
+        for (char c : entry.trim().toCharArray()) {
             score = enterScore(c);
         }
         return score;
