@@ -1,4 +1,4 @@
-# Basic Scoring</h1>
+# Basic Scoring
 
 As a Cricket Scorer, I want an application to help me add the scores so the score is always up to date.
 
