@@ -79,7 +79,7 @@ pipeline {
                         reportName: 'Cricket Specification',
                         reportTitles: 'Cricket Specification'
                     ])
-                    junit 'build/reports/**/*.xml'
+                    junit 'build/test-results/test/TEST-*.xml'
                 }
             }
         }
